@@ -1,0 +1,26 @@
+name: ABBLESS APK Builder
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Kuronka code ya ABBLESS
+        uses: actions/checkout@v4
+
+      - name: Kwinjiza Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Kwinjiza Capacitor
+        run: |
+          npm install @capacitor/core @capacitor/cli
+          
+      - name: Gutegura APK
+        run: echo "Tugiye kubaka ABBLESS APK"
