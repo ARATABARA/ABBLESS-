@@ -1,0 +1,8 @@
+{
+  "appId": "com.abbless.app",
+  "appName": "ABBLESS",
+  "webDir": ".",
+  "server": {
+    "androidScheme": "https"
+  }
+}
