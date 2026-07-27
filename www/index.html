@@ -1,830 +1,553 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
-<meta charset="UTF-8">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>ABBLESS - Learn Without Limits</title>
-
-<link rel="stylesheet" href="style.css">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ABBLESS - Learn Without Limits</title>
+  <link rel="stylesheet" href="style.css">
 </head>
-
 
 <body>
 
-
-<!-- ======================
- SPLASH SCREEN
-======================= -->
-
 <section id="splash" class="page active">
-
-<div class="logo-box">
-
-<div class="logo">
-
-📖💻
-
-</div>
-
-<h1>ABBLESS</h1>
-
-<p>
-Learn Without Limits
-</p>
-
-</div>
-
+  <div class="logo-box">
+    <div class="logo">📖💻</div>
+    <h1>ABBLESS</h1>
+    <p>Learn Without Limits</p>
+  </div>
 </section>
-
-
-
-
-<!-- ======================
- PRESENTATION PAGE
-======================= -->
-
 
 <section id="presentation" class="page">
-
-
-<div class="container">
-
-
-<div class="brand">
-
-<h1>
-Welcome to ABBLESS
-</h1>
-
-
-<p>
-
-A modern learning platform where everyone can study,
-discover knowledge and improve skills.
-
-</p>
-
-
-<button onclick="showPage('register')">
-
-Get Started
-
-</button>
-
-
-</div>
-
-
-</div>
-
-
+  <div class="container">
+    <div class="brand">
+      <h1>Welcome to ABBLESS</h1>
+      <p>A modern learning platform where everyone can study, discover knowledge and improve skills.</p>
+      <button onclick="showPage('register')">Get Started</button>
+    </div>
+  </div>
 </section>
-
-
-
-
-
-<!-- ======================
- REGISTER PAGE
-======================= -->
-
 
 <section id="register" class="page">
+  <div class="form-box">
+    <h2>Create Account</h2>
 
+    <input type="text" id="username" placeholder="Full Name">
+    <input type="email" id="email" placeholder="Email">
+    <input type="password" id="password" placeholder="Password">
 
-<div class="form-box">
-
-
-<h2>
-
-Create Account
-
-</h2>
-
-
-
-<input 
-type="text"
-id="username"
-placeholder="Full Name">
-
-
-
-<input
-type="email"
-id="email"
-placeholder="Email">
-
-
-
-<input
-type="password"
-id="password"
-placeholder="Password">
-
-
-
-<button onclick="registerUser()">
-
-Register
-
-</button>
-
-
-</div>
-
-
+    <button onclick="registerUser()">Register</button>
+  </div>
 </section>
-
-
-
-
-
-<!-- ======================
- HOME PAGE
-======================= -->
-
 
 <section id="home" class="page">
 
-
-<!-- TOP BAR -->
-
 <header class="top-bar">
-
-
-<div class="app-logo">
-
-📖 ABBLESS
-
-</div>
-
+<div class="app-logo">📖 ABBLESS</div>
 
 <div class="top-actions">
+<button onclick="searchABBLESS()">🔍</button>
+<button onclick="openSettings()">⚙️</button>
+<button onclick="openMenu()">☰</button>
+<button id="adminButton" onclick="openAdmin()" style="display:none;">🛡️</button>
+</div>
+
+</header>
+
+<div class="home-content">
+<h2>Welcome to ABBLESS</h2>
+<p>Start your learning journey.</p>
+</div>
+
+<nav class="bottom-nav">
+<button onclick="openFeature('lessons')">📚<br>Lessons</button>
+<button onclick="openFeature('messages')">💬<br>Messages</button>
+<button onclick="openFeature('notifications')">🔔<br>Notifications</button>
+<button onclick="openFeature('ai')">🤖<br>AI</button>
+<button onclick="openFeature('quiz')">📝<br>Quiz</button>
+</nav>
+
+</section>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+<!-- ======================
+LESSONS PAGE
+====================== -->
+<section id="lessons" class="page feature-page">
+
+  <header class="page-header">
+    <button onclick="showPage('home')">← Home</button>
+    <h2>📚 Lessons</h2>
+  </header>
+
+  <div class="feature-card">
+    <h3>Latest Courses</h3>
+    <p>Mathematics, Science, Languages, Programming and more.</p>
+
+    <button>Open Mathematics</button>
+    <button>Open Science</button>
+    <button>Open Programming</button>
+    <button>Open Languages</button>
+  </div>
+
+</section>
+
+<!-- ======================
+MESSAGES PAGE
+====================== -->
+<section id="messages" class="page feature-page">
+
+  <header class="page-header">
+    <button onclick="showPage('home')">← Home</button>
+    <h2>💬 Messages</h2>
+  </header>
+
+  <div class="feature-card">
+
+    <h3>Inbox</h3>
+
+    <div class="message-item">
+      <strong>Teacher</strong><br>
+      Welcome to ABBLESS.
+    </div>
+
+    <div class="message-item">
+      <strong>Student</strong><br>
+      Hello, can you help me?
+    </div>
+
+    <button>New Message</button>
+
+  </div>
+
+</section>
+
+<!-- ======================
+NOTIFICATIONS PAGE
+====================== -->
+<section id="notifications" class="page feature-page">
+
+  <header class="page-header">
+    <button onclick="showPage('home')">← Home</button>
+    <h2>🔔 Notifications</h2>
+  </header>
+
+  <div class="feature-card">
+
+    <div class="notification-item">
+      📢 New lesson available.
+    </div>
+
+    <div class="notification-item">
+      🎓 Certificate unlocked.
+    </div>
+
+    <div class="notification-item">
+      🤖 ABBLESS AI has new features.
+    </div>
+
+  </div>
+
+</section>
+<!-- ======================
+ABBLESS AI
+====================== -->
+<section id="ai" class="page feature-page">
+
+<header class="ai-header">
+
+<button onclick="showPage('home')">←</button>
+
+<h2>🤖 ABBLESS AI</h2>
+
+<button>⚙️</button>
+
+</header>
+
+<div class="ai-chat" id="aiChat">
+
+<div class="ai-message">
+
+<div class="avatar">🤖</div>
+
+<div class="bubble ai">
+
+Hello 👋 Welcome to ABBLESS AI.
+
+I can help you with:
+
+📚 Learning
+
+💻 Programming
+
+📝 Writing
+
+🌍 Translation
+
+➗ Mathematics
+
+🔬 Science
+
+📖 History
+
+💼 Business
+
+🎓 Quiz
+
+Ask me anything.
+
+</div>
+
+</div>
+
+</div>
+
+<div class="ai-input">
+
+<button>📎</button>
+
+<input
+type="text"
+id="aiQuestion"
+placeholder="Message ABBLESS AI...">
+
+<button id="voiceButton">🎤</button>
+
+<button onclick="askAI()">➤</button>
+
+</div>
+
+</section>
 
 
-<button>
-🔍
+<!-- ======================
+SETTINGS PAGE
+====================== -->
+
+<section id="settings" class="page feature-page">
+
+<header class="page-header">
+
+<button onclick="showPage('home')">
+← Home
 </button>
 
+<h2>⚙️ Settings</h2>
+
+</header>
+
+
+<div class="feature-card">
 
 <button>
-⚙️
+🌍 Change Language
 </button>
-
 
 <button>
-☰
+🌙 Dark Mode
 </button>
 
+<button>
+🔔 Notification Settings
+</button>
 
-<button id="adminButton" style="display:none">
+<button>
+🔐 Privacy & Security
+</button>
 
-🛡️
+<button>
+👤 Account Settings
+</button>
 
+</div>
+
+</section>
+
+
+
+
+
+<!-- ======================
+MENU PAGE
+====================== -->
+
+<section id="menu" class="page feature-page">
+
+<header class="page-header">
+
+<button onclick="showPage('home')">
+← Home
+</button>
+
+<h2>☰ Menu</h2>
+
+</header>
+
+
+<div class="feature-card">
+
+<button onclick="showPage('profile')">
+👤 My Profile
+</button>
+
+<button onclick="showPage('certificates')">
+🎓 Certificates
+</button>
+
+<button>
+❓ Help Center
+</button>
+
+<button onclick="logout()">
+🚪 Logout
 </button>
 
 
 </div>
 
+</section>
+
+
+
+
+
+<!-- ======================
+USER PROFILE
+====================== -->
+
+<section id="profile" class="page feature-page">
+
+<header class="page-header">
+
+<button onclick="showPage('menu')">
+← Menu
+</button>
+
+<h2>👤 My Profile</h2>
 
 </header>
 
 
 
+<div class="profile-card">
 
 
-<!-- HOME CONTENT -->
+<div class="profile-image">
+👤
+</div>
 
 
-<div class="home-content">
-
-
-<h2>
-
-Welcome to ABBLESS
-
-</h2>
+<h3 id="profileName">
+ABBLESS User
+</h3>
 
 
 <p>
-
-Start your learning journey.
-
+📧 Email: user@email.com
 </p>
 
+
+<p>
+🌍 Language: English
+</p>
+
+
+<button>
+Edit Profile
+</button>
 
 
 </div>
 
 
-
-<!-- HANO TUZOSHIRA
- Lessons
- Messages
- Notifications
- AI
- Quiz
- -->
+</section>
 
 
 
-<!-- BOTTOM NAVIGATION -->
 
 
-<nav class="bottom-nav">
+<!-- ======================
+CERTIFICATES
+====================== -->
+
+<section id="certificates" class="page feature-page">
 
 
-<button onclick="openFeature('lessons')">
+<header class="page-header">
 
-📚
+<button onclick="showPage('menu')">
+← Menu
+</button>
+
+<h2>🎓 Certificates</h2>
+
+</header>
+
+
+<div class="feature-card">
+
+<h3>
+Your Achievements
+</h3>
+
+
+<p>
+🏆 Mathematics Certificate
+</p>
+
+
+<p>
+🏆 Programming Certificate
+</p>
+
+
+<p>
+🏆 Science Certificate
+</p>
+
+
+<button>
+Download Certificate
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ======================
+PAYMENT PAGE
+====================== -->
+
+<section id="payment" class="page feature-page">
+
+
+<header class="page-header">
+
+<button onclick="showPage('home')">
+← Home
+</button>
+
+<h2>💳 ABBLESS Subscription</h2>
+
+</header>
+
+
+
+<div class="payment-card">
+
+
+<h3>
+Choose Your Plan
+</h3>
+
+
+<button>
+📅 Day Plan
 <br>
-Lessons
-
+1500 BIF
 </button>
 
 
-<button onclick="openFeature('messages')">
-
-💬
+<button>
+📆 Week Plan
 <br>
-Messages
-
+2000 BIF
 </button>
 
 
-<button onclick="openFeature('notifications')">
-
-🔔
+<button>
+🗓️ Month Plan
 <br>
-Notifications
-
-</button>
-
-
-<button onclick="openFeature('ai')">
-
-🤖
-<br>
-AI
-
-</button>
-
-
-<button onclick="openFeature('quiz')">
-
-📝
-<br>
-Quiz
-
+4000 BIF
 </button>
 
 
 
-</nav>
+<h3>
+Payment Methods
+</h3>
+
+
+<button>
+📱 Lumicash
+</button>
+
+
+<button>
+📱 EcoCash
+</button>
+
+
+<button>
+📞 Airtime
+</button>
+
+
+<button>
+💳 Card Payment
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
 <!-- ======================
- LESSONS PAGE
-======================= -->
+NOTIFICATION CENTER
+====================== -->
 
-<section id="lessons" class="page feature-page">
+<section id="notificationCenter" class="page feature-page">
 
 
-<h2>
-📚 Lessons
-</h2>
+<header class="page-header">
+
+<button onclick="showPage('home')">
+← Home
+</button>
+
+<h2>🔔 Notifications</h2>
+
+</header>
+
 
 
 <div class="feature-card">
 
 
-<h3>
-Latest Courses
-</h3>
+<div>
+📢 New lesson added
+</div>
 
 
-<p>
-Mathematics, Science, Languages,
-Programming and more.
-</p>
+<div>
+🤖 ABBLESS AI updated
+</div>
 
 
-<button>
-Open Course
-</button>
+<div>
+🎓 New certificate available
+</div>
+
+
+<div>
+💳 Subscription reminder
+</div>
 
 
 </div>
 
 
 </section>
-
-
-
-
-
-<!-- ======================
- MESSAGES PAGE
-======================= -->
-
-<section id="messages" class="page feature-page">
-
-
-<h2>
-💬 Messages
-</h2>
-
-
-<div class="feature-card">
-
-
-<h3>
-Inbox
-</h3>
-
-
-<p>
-Communicate with students and teachers.
-</p>
-
-
-<button>
-New Message
-</button>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- ======================
- NOTIFICATIONS PAGE
-======================= -->
-
-<section id="notifications" class="page feature-page">
-
-
-<h2>
-🔔 Notifications
-</h2>
-
-
-<div class="feature-card">
-
-
-<p>
-📢 New lesson available.
-</p>
-
-
-<p>
-🎓 New certificate update.
-</p>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- ======================
- ABBLESS AI PAGE
-======================= -->
-
-<section id="ai" class="page feature-page">
-
-
-<h2>
-🤖 ABBLESS AI
-</h2>
-
-
-
-<div class="ai-box">
-
-
-<p>
-Hello, I am ABBLESS AI.
-How can I help you learn?
-</p>
-
-
-<input 
-type="text"
-placeholder="Ask something...">
-
-
-
-<button>
-Send
-</button>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-<!-- ======================
- QUIZ PAGE
-======================= -->
-
-<section id="quiz" class="page feature-page">
-
-
-<h2>
-📝 Quiz
-</h2>
-
-
-
-<div class="quiz-box">
-
-
-<h3>
-Daily Question
-</h3>
-
-
-<p>
-What is HTML?
-</p>
-
-
-<button>
-Answer A
-</button>
-
-
-<button>
-Answer B
-</button>
-
-
-<button>
-Answer C
-</button>
-
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-<!-- ======================
- ADMIN PANEL
- ONLY ADMIN
-======================= -->
-
-
-<section id="adminPanel" class="page feature-page">
-
-
-<h2>
-🛡️ Admin Panel
-</h2>
-
-
-
-<div class="admin-grid">
-
-
-
-<div class="admin-card">
-
-📚
-
-<h3>
-Manage Lessons
-</h3>
-
-<p>
-Add, edit and remove lessons.
-</p>
-
-</div>
-
-
-
-
-<div class="admin-card">
-
-👥
-
-<h3>
-Manage Users
-</h3>
-
-<p>
-Control users and accounts.
-</p>
-
-</div>
-
-
-
-
-<div class="admin-card">
-
-💰
-
-<h3>
-Subscription
-</h3>
-
-<p>
-Manage plans and prices.
-</p>
-
-</div>
-
-
-
-
-<div class="admin-card">
-
-📊
-
-<h3>
-Statistics
-</h3>
-
-<p>
-View platform data.
-</p>
-
-</div>
-
-
-
-<div class="admin-card">
-
-📢
-
-<h3>
-Announcements
-</h3>
-
-<p>
-Send messages to users.
-</p>
-
-</div>
-
-
-
-
-</div>
-
-
-
-</section>
-<!-- ======================
- SETTINGS PAGE
-======================= -->
-
-<section id="settings" class="page feature-page">
-
-
-<h2>
-⚙️ Settings
-</h2>
-
-
-<div class="feature-card">
-
-
-<button>
-Change Language
-</button>
-
-
-<button>
-Dark Mode
-</button>
-
-
-<button>
-Account Settings
-</button>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- ======================
- MENU PAGE
-======================= -->
-
-<section id="menu" class="page feature-page">
-
-
-<h2>
-☰ Menu
-</h2>
-
-
-<div class="feature-card">
-
-
-<button>
-My Profile
-</button>
-
-
-<button>
-Certificates
-</button>
-
-
-<button>
-Help Center
-</button>
-
-
-<button>
-Logout
-</button>
-
-
-</div>
-
-
-</section>
-
-
-
-
-
-<!-- ======================
- ADMIN DETAILS
-======================= -->
-
-
-<section id="adminTools" class="page feature-page">
-
-
-<h2>
-🛡️ Admin Tools
-</h2>
-
-
-<div class="feature-card">
-
-
-<button>
-➕ Add Lesson
-</button>
-
-
-<button>
-✏️ Edit Lesson
-</button>
-
-
-<button>
-❌ Delete Lesson
-</button>
-
-
-<button>
-📢 Send Announcement
-</button>
-
-
-<button>
-👥 Manage Users
-</button>
-
-
-<button>
-💳 Change Subscription Price
-</button>
-
-
-</div>
-
-
-
-</section>
-
-
-
-
-
-
-<!-- ======================
- FOOTER
-======================= -->
-
-<footer>
-
-
-<h2>
-ABBLESS
-</h2>
-
-
-<p>
-Learn Without Limits
-</p>
-
-
-<p>
-© 2026 ABBLESS
-</p>
-
-
-</footer>
-
-
-
-
-
-<!-- JAVASCRIPT -->
-
-<script src="script.js"></script>
-
-
-
-</body>
-
-</html>
-<style>
-body{
-background:linear-gradient(135deg,#080808,#151515,#062b18);
-color:white;
-font-family:Arial;
-}
-
-h1{color:#22c55e;}
-h2{color:#2563eb;}
-button{
-background:#7c3aed;
-color:white;
-border:none;
-padding:10px;
-border-radius:20px;
-}
-
-.card{
-background:#ffffff12;
-border:1px solid #22c55e;
-}
-
-a{color:#2563eb;}
-</style>
-<script>
-document.querySelectorAll("button").forEach(btn=>{
-btn.onclick=()=>{
-alert("ABBLESS: "+btn.innerText+" is working ✅");
-};
-});
-</script>
-const gitPlugin = acode.require("git");
-const gitAPI = gitPlugin.getAPI(1);
-
-// Get repository
-const repo = gitAPI.getRepository("/path/to/repositoy");
-
-// repository status
-await repo.status();
-
-// Create a branch
-await repo.createBranch("feature-branch", true);
-
-// Commit
-await repo.commit("Your commit message", { all: true });
-
-// Push to remote
-await repo.push("origin", "main");
