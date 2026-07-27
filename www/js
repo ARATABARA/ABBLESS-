@@ -1,39 +1,39 @@
 // ==========================
-// ABBLESS V2 ORIGINAL JS
-// BASIC SYSTEM
+// ABBLESS APP SYSTEM
 // ==========================
 
 
-// Show one page and hide others
+// Guhindura page
 
 function showPage(pageId){
 
-    document
-    .querySelectorAll(".page")
-    .forEach(page=>{
+document.querySelectorAll(".page").forEach(page=>{
 
-        page.classList.remove("active");
+page.classList.remove("active");
 
-    });
+});
 
 
-    document
-    .getElementById(pageId)
-    .classList.add("active");
+let page=document.getElementById(pageId);
+
+if(page){
+
+page.classList.add("active");
+
+}
 
 }
 
 
 
-
 // ==========================
-// SPLASH TO PRESENTATION
+// SPLASH SCREEN
 // ==========================
 
 
 setTimeout(()=>{
 
-    showPage("presentation");
+showPage("presentation");
 
 },2000);
 
@@ -42,178 +42,44 @@ setTimeout(()=>{
 
 
 // ==========================
-// REGISTER SYSTEM
+// REGISTER
 // ==========================
 
 
 function registerUser(){
 
 
-    let name =
-    document.getElementById("username").value;
+let name=document.getElementById("username").value;
+
+let email=document.getElementById("email").value;
+
+let password=document.getElementById("password").value;
 
 
 
-    let email =
-    document.getElementById("email").value;
+if(name==="" || email==="" || password===""){
 
+alert("Fill all information");
 
-
-    let password =
-    document.getElementById("password").value;
-
-
-
-    if(name==="" || email==="" || password===""){
-
-        alert("Please complete all fields");
-
-        return;
-
-    }
-
-
-
-    localStorage.setItem(
-        "ABBLESS_User",
-        name
-    );
-
-
-    localStorage.setItem(
-        "ABBLESS_Email",
-        email
-    );
-
-
-
-    alert(
-        "Welcome to ABBLESS "+name
-    );
-
-
-
-    showPage("home");
-
-
-}
-// ==========================
-// HOME FEATURES NAVIGATION
-// ==========================
-
-
-function openFeature(featureId){
-
-    showPage(featureId);
+return;
 
 }
 
 
 
+localStorage.setItem("ABBLESS_User",name);
 
-
-// ==========================
-// TOP MENU BUTTONS
-// ==========================
-
-
-function openSettings(){
-
-    showPage("settings");
-
-}
+localStorage.setItem("ABBLESS_Email",email);
 
 
 
-function openMenu(){
-
-    showPage("menu");
-
-}
+document.getElementById("profileName").innerHTML=name;
 
 
+alert("Welcome to ABBLESS "+name);
 
 
-
-// ==========================
-// ADMIN SYSTEM
-// ==========================
-
-
-let adminMode = false;
-
-
-
-function activateAdmin(){
-
-
-    adminMode = true;
-
-
-
-    document
-    .getElementById("adminButton")
-    .style.display="block";
-
-
-
-    alert(
-        "Admin access activated"
-    );
-
-
-}
-
-
-
-
-
-function openAdmin(){
-
-
-    if(adminMode){
-
-        showPage("adminPanel");
-
-    }
-
-    else{
-
-        alert(
-            "Admin access only"
-        );
-
-    }
-
-
-}
-
-
-
-
-
-// ==========================
-// SEARCH SYSTEM
-// ==========================
-
-
-function searchABBLESS(){
-
-
-    let search =
-    prompt(
-        "Search ABBLESS"
-    );
-
-
-
-    if(search){
-
-        alert(
-            "Searching for: "+search
-        );
-
-    }
+showPage("home");
 
 
 }
@@ -230,19 +96,13 @@ function searchABBLESS(){
 function logout(){
 
 
-    localStorage.removeItem(
-        "ABBLESS_User"
-    );
+localStorage.clear();
 
 
-    alert(
-        "Logged out"
-    );
+alert("You logged out");
 
 
-    showPage(
-        "presentation"
-    );
+showPage("presentation");
 
 
 }
@@ -252,48 +112,78 @@ function logout(){
 
 
 // ==========================
-// CHECK USER
+// PROFILE LOAD
 // ==========================
 
 
 window.onload=function(){
 
 
-let user =
-localStorage.getItem(
-"ABBLESS_User"
-);
-
+let user=localStorage.getItem("ABBLESS_User");
 
 
 if(user){
 
-console.log(
-"Welcome back "+user
-);
+
+let profile=document.getElementById("profileName");
+
+
+if(profile){
+
+profile.innerHTML=user;
+
+}
+
 
 }
 
 
 };
+
+
+
+
+
 // ==========================
-// ABBLESS AI DEMO
+// SEARCH
 // ==========================
 
 
-function askAI(){
+function searchABBLESS(){
 
 
-let question =
-document.querySelector("#ai input").value;
+let text=prompt("Search ABBLESS");
+
+
+if(text){
+
+alert("Searching: "+text);
+
+}
+
+
+}
 
 
 
-if(question===""){
 
-alert(
-"Ask ABBLESS AI something"
-);
+
+// ==========================
+// ABBLESS AI CHAT
+// ==========================
+
+
+function sendAI(){
+
+
+let input=document.getElementById("aiQuestion");
+
+
+let message=input.value;
+
+
+
+if(message===""){
 
 return;
 
@@ -301,9 +191,61 @@ return;
 
 
 
-alert(
-"ABBLESS AI: I will help you learn about "+question
-);
+let chat=document.getElementById("aiChat");
+
+
+
+chat.innerHTML += `
+
+<div class="ai-message">
+
+<div class="bubble user">
+
+${message}
+
+</div>
+
+</div>
+
+`;
+
+
+
+
+
+setTimeout(()=>{
+
+
+chat.innerHTML += `
+
+<div class="ai-message">
+
+<div class="avatar">
+
+🤖
+
+</div>
+
+
+<div class="bubble ai">
+
+I am ABBLESS AI. I will help you learn about ${message}.
+
+</div>
+
+</div>
+
+`;
+
+
+chat.scrollTop=chat.scrollHeight;
+
+
+},800);
+
+
+
+input.value="";
 
 
 }
@@ -311,8 +253,9 @@ alert(
 
 
 
+
 // ==========================
-// QUIZ SYSTEM
+// QUIZ
 // ==========================
 
 
@@ -321,17 +264,97 @@ function checkAnswer(answer){
 
 if(answer==="HTML"){
 
-alert(
-"Correct answer ✅"
-);
+
+alert("Correct answer ✅");
+
 
 }
 
 else{
 
-alert(
-"Try again ❌"
+
+alert("Wrong answer ❌");
+
+
+}
+
+
+}
+
+
+
+
+
+// ==========================
+// PAYMENT
+// ==========================
+
+
+function choosePlan(plan){
+
+
+localStorage.setItem(
+"ABBLESS_PLAN",
+plan
 );
+
+
+
+alert(
+"Selected plan: "+plan
+);
+
+
+
+}
+
+
+
+
+
+// ==========================
+// ADMIN SYSTEM
+// ==========================
+
+
+let admin=false;
+
+
+
+function activateAdmin(){
+
+
+admin=true;
+
+
+alert(
+"Admin activated"
+);
+
+
+}
+
+
+
+
+function openAdmin(){
+
+
+if(admin){
+
+
+showPage("adminDashboard");
+
+
+}
+
+else{
+
+
+alert(
+"Admin only"
+);
+
 
 }
 
@@ -349,78 +372,50 @@ alert(
 
 function addLesson(){
 
-
-alert(
-"New lesson added"
-);
-
+alert("Lesson added");
 
 }
-
 
 
 function editLesson(){
 
-
-alert(
-"Lesson updated"
-);
-
+alert("Lesson edited");
 
 }
-
 
 
 function deleteLesson(){
 
-
-alert(
-"Lesson removed"
-);
-
+alert("Lesson deleted");
 
 }
-
-
-
-function sendAnnouncement(){
-
-
-alert(
-"Announcement sent to users"
-);
-
-
-}
-
 
 
 function manageUsers(){
 
-
-alert(
-"User management opened"
-);
-
+alert("User management opened");
 
 }
 
 
+function sendAnnouncement(){
+
+alert("Announcement sent");
+
+}
+
 
 function changePrice(){
 
-
-let price =
-prompt(
-"Enter new subscription price"
+let price=prompt(
+"New subscription price"
 );
-
 
 
 if(price){
 
 alert(
-"Subscription price changed to "+price
+"Price changed to "+price+" BIF"
 );
 
 }
@@ -433,28 +428,10 @@ alert(
 
 
 // ==========================
-// PAYMENT DEMO
-// ==========================
-
-
-function payNow(){
-
-
-alert(
-"Choose payment method: Lumicash, EcoCash, Airtime"
-);
-
-
-}
-
-
-
-
-// ==========================
-// APP READY
+// APP START
 // ==========================
 
 
 console.log(
-"ABBLESS V2 Original is running successfully"
+"ABBLESS is running successfully 🚀"
 );
