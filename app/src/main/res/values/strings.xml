@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">ABBLESS</string>
+
+    <string name="welcome">Learn Without Limits</string>
+
+    <string name="ai_name">ABBLESS AI</string>
+
+    <string name="admin">Admin Panel</string>
+
+</resources>

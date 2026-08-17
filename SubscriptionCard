@@ -1,0 +1,51 @@
+@Composable
+private fun SubscriptionCard(
+    subscription: Subscription
+) {
+
+    val formatter =
+        SimpleDateFormat(
+            "dd/MM/yyyy",
+            Locale.getDefault()
+        )
+
+    Card(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(vertical = 6.dp)
+    ) {
+
+        Column(
+            modifier =
+                Modifier.padding(14.dp)
+        ) {
+
+            Text(
+                "👤 User: ${subscription.userId}"
+            )
+
+            Text(
+                "📅 Start: ${
+                    formatter.format(
+                        Date(subscription.startDate)
+                    )
+                }"
+            )
+
+            Text(
+                "⏳ Expiry: ${
+                    formatter.format(
+                        Date(subscription.expiryDate)
+                    )
+                }"
+            )
+
+            Text(
+                if (subscription.active)
+                    "🟢 Active"
+                else
+                    "🔴 Expired"
+            )
+        }
+    }
+}

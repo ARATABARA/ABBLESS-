@@ -1,0 +1,48 @@
+Button(onClick = {}) {
+    Text("🔐 Security")
+}
+
+Button(onClick = {}) {
+    Text("📚 Lessons Manager")
+}
+
+Button(onClick = {}) {
+    Text("👥 Users Manager")
+}
+
+Button(onClick = {}) {
+    Text("💬 Social Manager")
+}
+
+Button(onClick = {}) {
+    Text("🤖 AI Manager")
+}
+
+Button(onClick = {}) {
+    Text("📢 Announcements")
+}
+
+Button(onClick = {}) {
+    Text("💳 Payments & Prices")
+}
+
+Button(onClick = {}) {
+    Text("🎟️ Activation Codes")
+}
+
+Button(onClick = {}) {
+    Text("📊 Statistics")
+}
+
+Button(onClick = {}) {
+    Text("🌍 Languages")
+}
+
+Button(onClick = {}) {
+    Text("💾 Backup & Database")
+}
+
+Button(onClick = {}) {
+    Text("⚙️ App Settings")
+}
+
