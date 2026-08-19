@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
@@ -11,6 +12,7 @@ import androidx.compose.ui.unit.dp
 fun AdminLoginScreen(
     onLoginSuccess: () -> Unit
 ) {
+    val context = LocalContext.current
 
     var username by remember {
         mutableStateOf("")
@@ -32,10 +34,7 @@ fun AdminLoginScreen(
 
         Text(
             text = "🔐 ABBLESS Admin Login",
-            style =
-                MaterialTheme
-                    .typography
-                    .headlineMedium
+            style = MaterialTheme.typography.headlineMedium
         )
 
         Spacer(
@@ -51,8 +50,7 @@ fun AdminLoginScreen(
             label = {
                 Text("Username")
             },
-            modifier =
-                Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(
@@ -68,10 +66,8 @@ fun AdminLoginScreen(
             label = {
                 Text("Password")
             },
-            visualTransformation =
-                PasswordVisualTransformation(),
-            modifier =
-                Modifier.fillMaxWidth()
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(
@@ -80,33 +76,28 @@ fun AdminLoginScreen(
 
         Button(
             onClick = {
+                val success = AdminAuthRepository.login(
+                    context = context,
+                    username = username,
+                    password = password
+                )
 
-                val success =
-                    AdminAuthRepository.login(
-                        username,
-                        password
-                    )   
-if (success) {
-
-    AdminSession.loginAsAdmin()
-    onLoginSuccess()
-
-}                } else {
+                if (success) {
+                    AdminSession.loginAsAdmin()
+                    onLoginSuccess()
+                } else {
                     errorMessage =
                         "Username canke password si vyo."
                 }
             },
-            modifier =
-                Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
             Text("🔓 Login")
         }
 
         if (errorMessage.isNotEmpty()) {
-
             Spacer(
-                modifier =
-                    Modifier.height(12.dp)
+                modifier = Modifier.height(12.dp)
             )
 
             Text(
@@ -115,5 +106,4 @@ if (success) {
         }
     }
 }
-
 
