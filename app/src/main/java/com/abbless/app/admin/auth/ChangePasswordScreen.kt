@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 
@@ -11,22 +12,12 @@ import androidx.compose.ui.unit.dp
 fun ChangePasswordScreen(
     onPasswordChanged: () -> Unit
 ) {
+    val context = LocalContext.current
 
-    var oldPassword by remember {
-        mutableStateOf("")
-    }
-
-    var newPassword by remember {
-        mutableStateOf("")
-    }
-
-    var confirmPassword by remember {
-        mutableStateOf("")
-    }
-
-    var message by remember {
-        mutableStateOf("")
-    }
+    var oldPassword by remember { mutableStateOf("") }
+    var newPassword by remember { mutableStateOf("") }
+    var confirmPassword by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -36,74 +27,48 @@ fun ChangePasswordScreen(
 
         Text(
             text = "🔑 Change Admin Password",
-            style =
-                MaterialTheme
-                    .typography
-                    .headlineMedium
+            style = MaterialTheme.typography.headlineMedium
         )
 
-        Spacer(
-            modifier = Modifier.height(20.dp)
-        )
+        Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
             value = oldPassword,
-            onValueChange = {
-                oldPassword = it
-            },
-            label = {
-                Text("Current password")
-            },
-            visualTransformation =
-                PasswordVisualTransformation(),
-            modifier =
-                Modifier.fillMaxWidth()
+            onValueChange = { oldPassword = it },
+            label = { Text("Current password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(
-            modifier = Modifier.height(10.dp)
-        )
+        Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = newPassword,
-            onValueChange = {
-                newPassword = it
-            },
-            label = {
-                Text("New password")
-            },
-            visualTransformation =
-                PasswordVisualTransformation(),
-            modifier =
-                Modifier.fillMaxWidth()
+            onValueChange = { newPassword = it },
+            label = { Text("New password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(
-            modifier = Modifier.height(10.dp)
-        )
+        Spacer(modifier = Modifier.height(10.dp))
 
         OutlinedTextField(
             value = confirmPassword,
-            onValueChange = {
-                confirmPassword = it
-            },
-            label = {
-                Text("Confirm new password")
-            },
-            visualTransformation =
-                PasswordVisualTransformation(),
-            modifier =
-                Modifier.fillMaxWidth()
+            onValueChange = { confirmPassword = it },
+            label = { Text("Confirm new password") },
+            visualTransformation = PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
         )
 
-        Spacer(
-            modifier = Modifier.height(16.dp)
-        )
+        Spacer(modifier = Modifier.height(16.dp))
 
         Button(
             onClick = {
 
                 when {
+                    oldPassword.isBlank() -> {
+                        message = "Andika current password."
+                    }
 
                     newPassword.length < 8 -> {
                         message =
@@ -111,53 +76,40 @@ fun ChangePasswordScreen(
                     }
 
                     newPassword != confirmPassword -> {
-                        message =
-                            "Passwords nshasha ntizihura."
+                        message = "Passwords nshasha ntizihura."
                     }
 
                     else -> {
-
                         val changed =
-                            AdminAuthRepository
-                                .changePassword(
-                                    oldPassword,
-                                    newPassword
-                                )
+                            AdminAuthRepository.changePassword(
+                                context = context,
+                                oldPassword = oldPassword,
+                                newPassword = newPassword
+                            )
 
                         if (changed) {
-
-                            message =
-                                "Password yahindutse neza ✅"
+                            message = "Password yahindutse neza ✅"
 
                             oldPassword = ""
                             newPassword = ""
                             confirmPassword = ""
 
                             onPasswordChanged()
-
                         } else {
-
-                            message =
-                                "Current password siyo."
+                            message = "Current password siyo."
                         }
                     }
                 }
             },
-            modifier =
-                Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth()
         ) {
-
             Text("💾 Change Password")
         }
 
-        Spacer(
-            modifier =
-                Modifier.height(12.dp)
-        )
+        Spacer(modifier = Modifier.height(12.dp))
 
         if (message.isNotEmpty()) {
-
-            Text(message)
+            Text(text = message)
         }
     }
 }
