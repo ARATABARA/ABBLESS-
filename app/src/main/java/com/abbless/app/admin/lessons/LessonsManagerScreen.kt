@@ -12,7 +12,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -33,7 +32,7 @@ private fun LessonCard(
     onEdit: () -> Unit,
     onDelete: () -> Unit
 ) {
-    Card(
+    androidx.compose.material3.Card(
         modifier = Modifier.fillMaxWidth()
     ) {
         Column(
@@ -78,7 +77,12 @@ private fun LessonEditorDialog(
     initialLanguage: String,
     initialDescription: String,
     onDismiss: () -> Unit,
-    onSave: (String, String, String, String) -> Unit
+    onSave: (
+        String,
+        String,
+        String,
+        String
+    ) -> Unit
 ) {
     var lessonTitle by remember {
         mutableStateOf(initialTitle)
@@ -336,7 +340,11 @@ fun LessonsManagerScreen(
                 showAddDialog = false
             },
 
-            onSave = { title, category, language, description ->
+            onSave = {
+                    title,
+                    category,
+                    language,
+                    description ->
 
                 lessons.add(
                     AdminLesson(
@@ -366,20 +374,23 @@ fun LessonsManagerScreen(
                 editingLesson = null
             },
 
-            onSave = { title, category, language, description ->
+            onSave = {
+                    title,
+                    category,
+                    language,
+                    description ->
 
                 val index = lessons.indexOfFirst {
                     it.id == lesson.id
                 }
 
                 if (index >= 0) {
-                    lessons[index] =
-                        lesson.copy(
-                            title = title,
-                            category = category,
-                            language = language,
-                            description = description
-                        )
+                    lessons[index] = lesson.copy(
+                        title = title,
+                        category = category,
+                        language = language,
+                        description = description
+                    )
                 }
 
                 editingLesson = null
