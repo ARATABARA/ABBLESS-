@@ -12,7 +12,6 @@ import com.abbless.app.admin.lessons.LessonsManagerScreen
 import com.abbless.app.admin.payments.ActivationCodeManagerScreen
 import com.abbless.app.admin.payments.PaymentAdminScreen
 import com.abbless.app.admin.payments.SubscriptionManagerScreen
-import com.abbless.app.admin.security.AdminSecurity
 import com.abbless.app.admin.statistics.StatisticsScreen
 import com.abbless.app.admin.users.AdminUserScreen
 import com.abbless.app.admin.screens.AdminDashboardScreen
@@ -39,7 +38,7 @@ fun AdminNavigation(
         }
 
         composable("security") {
-            AdminSecurity()
+            Text("🔐 Security Manager")
         }
 
         composable("lessons") {

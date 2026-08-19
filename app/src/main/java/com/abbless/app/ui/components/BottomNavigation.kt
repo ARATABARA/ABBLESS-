@@ -26,17 +26,17 @@ fun ABBLESSBottomNavigation(
 
         BottomItem(
             "Lessons",
-            Icons.Default.MenuBook
+            Icons.Default.Star
         ),
 
         BottomItem(
             "AI",
-            Icons.Default.SmartToy
+            Icons.Default.Settings
         ),
 
         BottomItem(
             "Chat",
-            Icons.Default.Chat
+            Icons.Default.Email
         ),
 
         BottomItem(
