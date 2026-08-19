@@ -8,16 +8,18 @@ class LessonRepository {
     private val lessons = MutableStateFlow(
         listOf(
             AdminLesson(
-                id = 1,
+                id = "1",
                 title = "Science",
                 category = "Science",
-                description = "Lesson ya Science"
+                description = "Lesson ya Science",
+                language = "Kirundi"
             ),
             AdminLesson(
-                id = 2,
+                id = "2",
                 title = "Economics",
                 category = "Economics",
-                description = "Lesson ya Economics"
+                description = "Lesson ya Economics",
+                language = "Kirundi"
             )
         )
     )
@@ -29,27 +31,27 @@ class LessonRepository {
     fun addLesson(
         title: String,
         category: String,
-        description: String
+        description: String,
+        language: String
     ) {
-
         val newId =
-            (lessons.value.maxOfOrNull { it.id } ?: 0) + 1
+            System.currentTimeMillis().toString()
 
-        lessons.value = lessons.value + AdminLesson(
-            id = newId,
-            title = title,
-            category = category,
-            description = description
-        )
+        lessons.value =
+            lessons.value + AdminLesson(
+                id = newId,
+                title = title,
+                category = category,
+                description = description,
+                language = language
+            )
     }
 
     fun updateLesson(
         lesson: AdminLesson
     ) {
-
         lessons.value =
             lessons.value.map {
-
                 if (it.id == lesson.id) {
                     lesson
                 } else {
@@ -59,13 +61,11 @@ class LessonRepository {
     }
 
     fun deleteLesson(
-        id: Long
+        id: String
     ) {
-
         lessons.value =
             lessons.value.filter {
                 it.id != id
             }
     }
 }
-

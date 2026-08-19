@@ -27,35 +27,190 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
-data class AdminLesson(
-    val id: Long,
-    var title: String,
-    var category: String,
-    var description: String
-)
+@Composable
+private fun LessonCard(
+    lesson: AdminLesson,
+    onEdit: () -> Unit,
+    onDelete: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Text("📚 ${lesson.title}")
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text("Category: ${lesson.category}")
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text("Language: ${lesson.language}")
+
+            Spacer(modifier = Modifier.height(4.dp))
+
+            Text(lesson.description)
+
+            Spacer(modifier = Modifier.height(10.dp))
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Button(onClick = onEdit) {
+                    Text("✏️ Edit")
+                }
+
+                Button(onClick = onDelete) {
+                    Text("🗑️ Delete")
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun LessonEditorDialog(
+    title: String,
+    initialTitle: String,
+    initialCategory: String,
+    initialLanguage: String,
+    initialDescription: String,
+    onDismiss: () -> Unit,
+    onSave: (String, String, String, String) -> Unit
+) {
+    var lessonTitle by remember {
+        mutableStateOf(initialTitle)
+    }
+
+    var category by remember {
+        mutableStateOf(initialCategory)
+    }
+
+    var language by remember {
+        mutableStateOf(initialLanguage)
+    }
+
+    var description by remember {
+        mutableStateOf(initialDescription)
+    }
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+
+        title = {
+            Text(title)
+        },
+
+        text = {
+            Column {
+                OutlinedTextField(
+                    value = lessonTitle,
+                    onValueChange = {
+                        lessonTitle = it
+                    },
+                    label = {
+                        Text("Lesson title")
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(
+                    modifier = Modifier.height(8.dp)
+                )
+
+                OutlinedTextField(
+                    value = category,
+                    onValueChange = {
+                        category = it
+                    },
+                    label = {
+                        Text("Category")
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(
+                    modifier = Modifier.height(8.dp)
+                )
+
+                OutlinedTextField(
+                    value = language,
+                    onValueChange = {
+                        language = it
+                    },
+                    label = {
+                        Text("Language")
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                Spacer(
+                    modifier = Modifier.height(8.dp)
+                )
+
+                OutlinedTextField(
+                    value = description,
+                    onValueChange = {
+                        description = it
+                    },
+                    label = {
+                        Text("Description")
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        },
+
+        confirmButton = {
+            Button(
+                onClick = {
+                    if (lessonTitle.isNotBlank()) {
+                        onSave(
+                            lessonTitle,
+                            category,
+                            language,
+                            description
+                        )
+                    }
+                }
+            ) {
+                Text("💾 Save")
+            }
+        },
+
+        dismissButton = {
+            Button(
+                onClick = onDismiss
+            ) {
+                Text("Cancel")
+            }
+        }
+    )
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LessonsManagerScreen(
     onBack: () -> Unit = {}
 ) {
-
     val lessons = remember {
-
         mutableStateListOf(
-
             AdminLesson(
-                1,
-                "Science",
-                "Science",
-                "Lesson ya Science"
+                id = "1",
+                title = "Science",
+                description = "Lesson ya Science",
+                category = "Science",
+                language = "Kirundi"
             ),
 
             AdminLesson(
-                2,
-                "Economics",
-                "Economics",
-                "Lesson ya Economics"
+                id = "2",
+                title = "Economics",
+                description = "Lesson ya Economics",
+                category = "Economics",
+                language = "Kirundi"
             )
         )
     }
@@ -72,22 +227,32 @@ fun LessonsManagerScreen(
         mutableStateOf<AdminLesson?>(null)
     }
 
+    val filteredLessons = lessons.filter {
+        it.title.contains(
+            searchText,
+            ignoreCase = true
+        ) ||
+        it.category.contains(
+            searchText,
+            ignoreCase = true
+        ) ||
+        it.language.contains(
+            searchText,
+            ignoreCase = true
+        )
+    }
+
     Scaffold(
-
         topBar = {
-
             TopAppBar(
-
                 title = {
                     Text("📚 Lessons Manager")
                 }
             )
         }
-
     ) { paddingValues ->
 
         Column(
-
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
@@ -95,74 +260,55 @@ fun LessonsManagerScreen(
         ) {
 
             OutlinedTextField(
-
                 value = searchText,
-
                 onValueChange = {
                     searchText = it
                 },
-
                 label = {
-                    Text("🔎 Search lesson")
+                    Text("🔎 Search lessons")
                 },
-
-                modifier =
-                    Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth()
             )
 
             Spacer(
-                modifier =
-                    Modifier.height(12.dp)
+                modifier = Modifier.height(12.dp)
             )
 
-            Button(
-
-                onClick = {
-                    showAddDialog = true
-                },
-
-                modifier =
-                    Modifier.fillMaxWidth()
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
 
-                Text("➕ Add Lesson")
+                Button(
+                    onClick = onBack,
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("⬅️ Back")
+                }
+
+                Button(
+                    onClick = {
+                        showAddDialog = true
+                    },
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text("➕ Add")
+                }
             }
 
             Spacer(
-                modifier =
-                    Modifier.height(12.dp)
+                modifier = Modifier.height(12.dp)
             )
 
-            val filteredLessons =
-                lessons.filter {
-
-                    it.title.contains(
-                        searchText,
-                        ignoreCase = true
-                    ) ||
-
-                    it.category.contains(
-                        searchText,
-                        ignoreCase = true
-                    )
-                }
-
             LazyColumn(
-
-                verticalArrangement =
-                    Arrangement.spacedBy(10.dp)
-
+                verticalArrangement = Arrangement.spacedBy(10.dp)
             ) {
-
                 items(
                     filteredLessons,
-                    key = {
-                        it.id
-                    }
+                    key = { it.id }
                 ) { lesson ->
 
                     LessonCard(
-
                         lesson = lesson,
 
                         onEdit = {
@@ -170,10 +316,7 @@ fun LessonsManagerScreen(
                         },
 
                         onDelete = {
-
-                            lessons.remove(
-                                lesson
-                            )
+                            lessons.remove(lesson)
                         }
                     )
                 }
@@ -182,40 +325,26 @@ fun LessonsManagerScreen(
     }
 
     if (showAddDialog) {
-
         LessonEditorDialog(
-
-            title = "Add Lesson",
-
+            title = "➕ Add Lesson",
             initialTitle = "",
-
             initialCategory = "",
-
+            initialLanguage = "Kirundi",
             initialDescription = "",
 
             onDismiss = {
                 showAddDialog = false
             },
 
-            onSave = {
-                title,
-                category,
-                description ->
-
-                val newId =
-                    (
-                        lessons.maxOfOrNull {
-                            it.id
-                        } ?: 0
-                    ) + 1
+            onSave = { title, category, language, description ->
 
                 lessons.add(
-
                     AdminLesson(
-                        id = newId,
+                        id = System.currentTimeMillis().toString(),
                         title = title,
+                        description = description,
                         category = category,
-                        description = description
+                        language = language
                     )
                 )
 
@@ -227,253 +356,34 @@ fun LessonsManagerScreen(
     editingLesson?.let { lesson ->
 
         LessonEditorDialog(
-
-            title = "Edit Lesson",
-
-            initialTitle =
-                lesson.title,
-
-            initialCategory =
-                lesson.category,
-
-            initialDescription =
-                lesson.description,
+            title = "✏️ Edit Lesson",
+            initialTitle = lesson.title,
+            initialCategory = lesson.category,
+            initialLanguage = lesson.language,
+            initialDescription = lesson.description,
 
             onDismiss = {
                 editingLesson = null
             },
 
-            onSave = {
-                title,
-                category,
-                description ->
+            onSave = { title, category, language, description ->
 
-                lesson.title =
-                    title
+                val index = lessons.indexOfFirst {
+                    it.id == lesson.id
+                }
 
-                lesson.category =
-                    category
-
-                lesson.description =
-                    description
+                if (index >= 0) {
+                    lessons[index] =
+                        lesson.copy(
+                            title = title,
+                            category = category,
+                            language = language,
+                            description = description
+                        )
+                }
 
                 editingLesson = null
             }
         )
     }
 }
-
-@Composable
-private fun LessonCard(
-
-    lesson: AdminLesson,
-
-    onEdit: () -> Unit,
-
-    onDelete: () -> Unit
-
-) {
-
-    Card(
-        modifier =
-            Modifier.fillMaxWidth()
-    ) {
-
-        Column(
-            modifier =
-                Modifier.padding(16.dp)
-        ) {
-
-            Text(
-                text =
-                    "📚 ${lesson.title}"
-            )
-
-            Spacer(
-                modifier =
-                    Modifier.height(4.dp)
-            )
-
-            Text(
-                text =
-                    "Category: ${lesson.category}"
-            )
-
-            Spacer(
-                modifier =
-                    Modifier.height(4.dp)
-            )
-
-            Text(
-                text =
-                    lesson.description
-            )
-
-            Spacer(
-                modifier =
-                    Modifier.height(10.dp)
-            )
-
-            Row(
-                horizontalArrangement =
-                    Arrangement.spacedBy(8.dp)
-            ) {
-
-                Button(
-                    onClick = onEdit
-                ) {
-
-                    Text("✏️ Edit")
-                }
-
-                Button(
-                    onClick = onDelete
-                ) {
-
-                    Text("🗑️ Delete")
-                }
-            }
-        }
-    }
-}
-
-@Composable
-private fun LessonEditorDialog(
-
-    title: String,
-
-    initialTitle: String,
-
-    initialCategory: String,
-
-    initialDescription: String,
-
-    onDismiss: () -> Unit,
-
-    onSave:
-        (
-            String,
-            String,
-            String
-        ) -> Unit
-
-) {
-
-    var lessonTitle by remember {
-        mutableStateOf(initialTitle)
-    }
-
-    var category by remember {
-        mutableStateOf(initialCategory)
-    }
-
-    var description by remember {
-        mutableStateOf(
-            initialDescription
-        )
-    }
-
-    AlertDialog(
-
-        onDismissRequest =
-            onDismiss,
-
-        title = {
-            Text(title)
-        },
-
-        text = {
-
-            Column {
-
-                OutlinedTextField(
-
-                    value =
-                        lessonTitle,
-
-                    onValueChange = {
-                        lessonTitle = it
-                    },
-
-                    label = {
-                        Text("Lesson title")
-                    }
-                )
-
-                Spacer(
-                    modifier =
-                        Modifier.height(8.dp)
-                )
-
-                OutlinedTextField(
-
-                    value =
-                        category,
-
-                    onValueChange = {
-                        category = it
-                    },
-
-                    label = {
-                        Text("Category")
-                    }
-                )
-
-                Spacer(
-                    modifier =
-                        Modifier.height(8.dp)
-                )
-
-                OutlinedTextField(
-
-                    value =
-                        description,
-
-                    onValueChange = {
-                        description = it
-                    },
-
-                    label = {
-                        Text("Description")
-                    }
-                )
-            }
-        },
-
-        confirmButton = {
-
-            Button(
-
-                onClick = {
-
-                    if (
-                        lessonTitle
-                            .isNotBlank()
-                    ) {
-
-                        onSave(
-                            lessonTitle,
-                            category,
-                            description
-                        )
-                    }
-                }
-            ) {
-
-                Text("💾 Save")
-            }
-        },
-
-        dismissButton = {
-
-            Button(
-                onClick =
-                    onDismiss
-            ) {
-
-                Text("Cancel")
-            }
-        }
-    )
-}
-

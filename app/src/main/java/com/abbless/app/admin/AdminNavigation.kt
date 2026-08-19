@@ -6,15 +6,16 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 
-import com.abbless.app.admin.screens.AdminDashboardScreen
-import com.abbless.app.admin.security.SecurityManagerScreen
-import com.abbless.app.admin.ai.AIManagerScreen
-import com.abbless.app.admin.social.SocialManagerScreen
-import com.abbless.app.admin.language.LanguageManagerScreen
+import com.abbless.app.admin.announcements.AnnouncementScreen
+import com.abbless.app.admin.auth.ChangePasswordScreen
 import com.abbless.app.admin.lessons.LessonsManagerScreen
-import com.abbless.app.admin.advancedstats.AdvancedStatisticsScreen
-import com.abbless.app.admin.settings.SystemSettingsScreen
-import com.abbless.app.admin.permissions.AdminPermissionsScreen
+import com.abbless.app.admin.payments.ActivationCodeManagerScreen
+import com.abbless.app.admin.payments.PaymentAdminScreen
+import com.abbless.app.admin.payments.SubscriptionManagerScreen
+import com.abbless.app.admin.security.AdminSecurity
+import com.abbless.app.admin.statistics.StatisticsScreen
+import com.abbless.app.admin.users.AdminUserScreen
+import com.abbless.app.admin.screens.AdminDashboardScreen
 
 @Composable
 fun AdminNavigation(
@@ -38,57 +39,63 @@ fun AdminNavigation(
         }
 
         composable("security") {
-            SecurityManagerScreen()
+            AdminSecurity()
         }
 
         composable("lessons") {
-            LessonsManagerScreen()
-        }
-
-        composable("social") {
-            SocialManagerScreen()
-        }
-
-        composable("ai") {
-            AIManagerScreen()
-        }
-
-        composable("languages") {
-            LanguageManagerScreen()
-        }
-
-        composable("statistics") {
-            AdvancedStatisticsScreen()
-        }
-
-        composable("settings") {
-            SystemSettingsScreen()
-        }
-
-        composable("permissions") {
-            AdminPermissionsScreen()
+            LessonsManagerScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable("users") {
-            Text("👥 Users Manager")
+            AdminUserScreen()
         }
 
         composable("announcements") {
-            Text("📢 Announcements")
+            AnnouncementScreen()
         }
 
         composable("payments") {
-            Text("💳 Payments & Prices")
+            PaymentAdminScreen()
         }
 
         composable("activation_codes") {
-            Text("🎟️ Activation Codes")
+            ActivationCodeManagerScreen()
+        }
+
+        composable("subscriptions") {
+            SubscriptionManagerScreen()
+        }
+
+        composable("statistics") {
+            StatisticsScreen()
+        }
+
+        composable("settings") {
+            ChangePasswordScreen(
+                onPasswordChanged = {
+                    navController.popBackStack()
+                }
+            )
         }
 
         composable("backup") {
             Text("💾 Backup & Database")
         }
+
+        composable("ai") {
+            Text("🤖 AI Manager — coming soon")
+        }
+
+        composable("social") {
+            Text("💬 Social Manager — coming soon")
+        }
+
+        composable("languages") {
+            Text("🌍 Language Manager — coming soon")
+        }
     }
 }
-
-
