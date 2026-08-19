@@ -1,5 +1,6 @@
 package com.abbless.app.admin
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -11,88 +12,31 @@ import com.abbless.app.admin.ai.AIManagerScreen
 import com.abbless.app.admin.social.SocialManagerScreen
 import com.abbless.app.admin.language.LanguageManagerScreen
 import com.abbless.app.admin.lessons.LessonsManagerScreen
-import com.abbless.app.admin.quiz.AdminQuizManagerScreen
 import com.abbless.app.admin.advancedstats.AdvancedStatisticsScreen
 import com.abbless.app.admin.settings.SystemSettingsScreen
 import com.abbless.app.admin.permissions.AdminPermissionsScreen
-import com.abbless.app.admin.auth.AdminSession
+
 @Composable
 fun AdminNavigation(
     navController: NavHostController
 ) {
-
     NavHost(
         navController = navController,
         startDestination = "admin_dashboard"
     ) {
 
         composable("admin_dashboard") {
-
             AdminDashboardScreen(
-
-                onSecurityClick = {
-                    navController.navigate("security")
-                },
-
-                onLessonsClick = {
-                    navController.navigate("lessons")
-                },
-
-                onUsersClick = {
-                    navController.navigate("users")
-                },
-
-                onSocialClick = {
-                    navController.navigate("social")
-                },
-
-                onAIClick = {
-                    navController.navigate("ai")
-                },
-
-                onAnnouncementsClick = {
-                    navController.navigate("announcements")
-                },
-
-                onPaymentsClick = {
-                    navController.navigate("payments")
-                },
-
-                onActivationCodesClick = {
-                    navController.navigate("activation_codes")
-                },
-
-                onStatisticsClick = {
-                    navController.navigate("statistics")
-                },
-
-                onLanguagesClick = {
-                    navController.navigate("languages")
-                },
-
-                onBackupClick = {
-                    navController.navigate("backup")
-                },
-
-                onSettingsClick = {
-                    navController.navigate("settings")
-                },
-
                 onLogoutClick = {
-
-    AdminSession.logout()
-
-    navController.navigate(
-        "admin_login"
-    ) {
-
-        popUpTo(
-            "admin_dashboard"
-        ) {
-            inclusive = true
+                    navController.navigate("admin_login") {
+                        popUpTo("admin_dashboard") {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
-    }
-},
+
         composable("security") {
             SecurityManagerScreen()
         }
@@ -146,6 +90,5 @@ fun AdminNavigation(
         }
     }
 }
-
 
 

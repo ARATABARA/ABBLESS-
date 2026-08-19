@@ -1,74 +1,141 @@
-import com.abbless.app.admin.auth.AdminSession Bu
-tton(onClick = {}) {
-    Text("🔐 Security")
-}
+package com.abbless.app.admin.screens
 
-Button(onClick = {}) {
-    Text("📚 Lessons Manager")
-}
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import com.abbless.app.admin.auth.AdminSession
 
-Button(onClick = {}) {
-    Text("👥 Users Manager")
-}
-
-Button(onClick = {}) {
-    Text("💬 Social Manager")
-}
-
-Button(onClick = {}) {
-    Text("🤖 AI Manager")
-}
-
-Button(onClick = {}) {
-    Text("📢 Announcements")
-}
-
-Button(onClick = {}) {
-    Text("💳 Payments & Prices")
-}
-
-Button(onClick = {}) {
-    Text("🎟️ Activation Codes")
-}
-
-Button(onClick = {}) {
-    Text("📊 Statistics")
-}
-
-Button(onClick = {}) {
-    Text("🌍 Languages")
-}
-
-Button(onClick = {}) {
-    Text("💾 Backup & Database")
-}
-
-Button(onClick = {}) {
-    Text("⚙️ App Settings")
-}
-
-onLogoutClick: () -> Unit = {}
-}
-
-Spacer(
-    modifier = Modifier.height(20.dp)
-)
-
-Button(
-    onClick = onLogoutClick,
-    modifier = Modifier.fillMaxWidth()
+@Composable
+fun AdminDashboardScreen(
+    onLogoutClick: () -> Unit = {}
 ) {
-    Text("🚪 Logout")
-}
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .verticalScroll(rememberScrollState())
+            .padding(20.dp),
+        verticalArrangement = Arrangement.spacedBy(10.dp)
+    ) {
 
-onLogoutClick = {
+        Text(
+            text = "ABBLESS Admin Panel",
+            style = MaterialTheme.typography.headlineMedium
+        )
 
-    AdminSession.logout()
+        Text(
+            text = "Administration",
+            style = MaterialTheme.typography.titleMedium
+        )
 
-    navController.navigate("admin_login") {
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("🔐 Security")
+        }
 
-        popUpTo("admin_dashboard") {
-            inclusive = true
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("📚 Lessons Manager")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("👥 Users Manager")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("💬 Social Manager")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("🤖 AI Manager")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("📢 Announcements")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("💳 Payments & Prices")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("🎟️ Activation Codes")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("📊 Statistics")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("🌍 Languages")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("💾 Backup & Database")
+        }
+
+        Button(
+            onClick = {},
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("⚙️ App Settings")
+        }
+
+        Spacer(
+            modifier = Modifier.height(10.dp)
+        )
+
+        Button(
+            onClick = {
+                AdminSession.logout()
+                onLogoutClick()
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("🚪 Logout")
         }
     }
-},
+}
+
