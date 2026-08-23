@@ -9,7 +9,7 @@ import com.abbless.app.core.Routes
 import com.abbless.app.auth.screens.RegisterScreen
 import com.abbless.app.ui.screens.PresentationScreen
 import com.abbless.app.ui.screens.LoginScreen
-import com.abbless.app.ui.screens.HomeScreen
+import com.abbless.app.home.HomeScreen
 
 @Composable
 fun AppNavigation() {
