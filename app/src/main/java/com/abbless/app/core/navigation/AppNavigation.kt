@@ -31,7 +31,7 @@ fun AppNavigation() {
 
     NavHost(
         navController = navController,
-        startDestination = Routes.SPLASH
+        startDestination = Routes.REGISTER
     ) {
 
         // =========================
