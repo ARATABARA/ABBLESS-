@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.abbless.app.auth.data.AuthRepository
 import com.abbless.app.auth.model.UserAccount
@@ -14,18 +15,19 @@ fun RegisterScreen(
     onRegisterSuccess: () -> Unit,
     onLogin: () -> Unit
 ) {
+    val context = LocalContext.current
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(20.dp)
     ) {
-
         Text(
             text = "Create ABBLESS Account",
             style = MaterialTheme.typography.headlineMedium
@@ -71,23 +73,30 @@ fun RegisterScreen(
 
         Button(
             onClick = {
-                if (
-                    name.isNotBlank() &&
-                    email.isNotBlank() &&
-                    password.isNotBlank() &&
-                    password == confirmPassword
-                ) {
+                when {
+                    name.isBlank() ||
+                    email.isBlank() ||
+                    password.isBlank() -> {
+                        message = "Uzuza amakuru yose."
+                    }
 
-                    AuthRepository.register(
-                        UserAccount(
-                            id = UUID.randomUUID().toString(),
-                            name = name,
-                            email = email,
-                            password = password
+                    password != confirmPassword -> {
+                        message = "Passwords ntizisa."
+                    }
+
+                    else -> {
+                        AuthRepository.register(
+                            context = context,
+                            user = UserAccount(
+                                id = UUID.randomUUID().toString(),
+                                name = name.trim(),
+                                email = email.trim(),
+                                password = password
+                            )
                         )
-                    )
 
-                    onRegisterSuccess()
+                        onRegisterSuccess()
+                    }
                 }
             },
             modifier = Modifier.fillMaxWidth()
@@ -103,6 +112,10 @@ fun RegisterScreen(
         ) {
             Text("I have an account")
         }
+
+        if (message.isNotEmpty()) {
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(message)
+        }
     }
 }
-
