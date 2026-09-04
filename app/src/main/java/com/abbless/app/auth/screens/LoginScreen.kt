@@ -10,22 +10,14 @@ import com.abbless.app.auth.data.AuthRepository
 
 @Composable
 fun LoginScreen(
-    onLogin: () -> Unit = {}
+    onLogin: () -> Unit = {},
+    onForgotPassword: () -> Unit = {}
 ) {
-
     val context = LocalContext.current
 
-    var email by remember {
-        mutableStateOf("")
-    }
-
-    var password by remember {
-        mutableStateOf("")
-    }
-
-    var message by remember {
-        mutableStateOf("")
-    }
+    var phoneNumber by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var message by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier
@@ -43,14 +35,18 @@ fun LoginScreen(
         )
 
         OutlinedTextField(
-            value = email,
+            value = phoneNumber,
             onValueChange = {
-                email = it
+                phoneNumber = it
             },
             label = {
-                Text("Email")
+                Text("Phone Number")
             },
-            modifier = Modifier.fillMaxWidth()
+            placeholder = {
+                Text("+257...")
+            },
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
         )
 
         Spacer(
@@ -65,7 +61,8 @@ fun LoginScreen(
             label = {
                 Text("Password")
             },
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
         )
 
         Spacer(
@@ -77,20 +74,15 @@ fun LoginScreen(
 
                 val user = AuthRepository.login(
                     context = context,
-                    email = email.trim(),
+                    phoneNumber = phoneNumber.trim(),
                     password = password
                 )
 
                 if (user != null) {
-
                     message = "Welcome ${user.name} ✅"
-
                     onLogin()
-
                 } else {
-
-                    message = "Email canke password si vyo ❌"
-
+                    message = "Phone Number canke Password si vyo ❌"
                 }
             },
             modifier = Modifier.fillMaxWidth()
@@ -99,11 +91,26 @@ fun LoginScreen(
         }
 
         Spacer(
-            modifier = Modifier.height(12.dp)
+            modifier = Modifier.height(4.dp)
         )
 
+        TextButton(
+            onClick = onForgotPassword,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Forgot Password?")
+        }
+
         if (message.isNotEmpty()) {
-            Text(message)
+
+            Spacer(
+                modifier = Modifier.height(10.dp)
+            )
+
+            Text(
+                text = message
+            )
         }
     }
 }
+

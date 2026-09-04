@@ -7,20 +7,17 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import com.abbless.app.auth.data.AuthRepository
-import com.abbless.app.auth.model.UserAccount
-import java.util.UUID
 
 @Composable
-fun RegisterScreen(
-    onRegisterSuccess: () -> Unit,
-    onLogin: () -> Unit
+fun ForgotPasswordScreen(
+    onPasswordChanged: () -> Unit,
+    onBackToLogin: () -> Unit
 ) {
     val context = LocalContext.current
 
-    var name by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     var dateOfBirth by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
+    var newPassword by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var message by remember { mutableStateOf("") }
 
@@ -31,28 +28,12 @@ fun RegisterScreen(
     ) {
 
         Text(
-            text = "Create ABBLESS Account",
+            text = "Forgot Password?",
             style = MaterialTheme.typography.headlineMedium
         )
 
         Spacer(
             modifier = Modifier.height(20.dp)
-        )
-
-        OutlinedTextField(
-            value = name,
-            onValueChange = {
-                name = it
-            },
-            label = {
-                Text("Name")
-            },
-            modifier = Modifier.fillMaxWidth(),
-            singleLine = true
-        )
-
-        Spacer(
-            modifier = Modifier.height(10.dp)
         )
 
         OutlinedTextField(
@@ -90,16 +71,24 @@ fun RegisterScreen(
         )
 
         Spacer(
+            modifier = Modifier.height(20.dp)
+        )
+
+        Text(
+            text = "Nimara kwemeza amakuru yawe, shiraho password nshasha."
+        )
+
+        Spacer(
             modifier = Modifier.height(10.dp)
         )
 
         OutlinedTextField(
-            value = password,
+            value = newPassword,
             onValueChange = {
-                password = it
+                newPassword = it
             },
             label = {
-                Text("Password")
+                Text("New Password")
             },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
@@ -115,7 +104,7 @@ fun RegisterScreen(
                 confirmPassword = it
             },
             label = {
-                Text("Confirm Password")
+                Text("Confirm New Password")
             },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
@@ -130,23 +119,20 @@ fun RegisterScreen(
 
                 when {
 
-                    name.isBlank() ||
                     phoneNumber.isBlank() ||
                     dateOfBirth.isBlank() ||
-                    password.isBlank() ||
+                    newPassword.isBlank() ||
                     confirmPassword.isBlank() -> {
 
-                        message =
-                            "Uzuza amakuru yose."
+                        message = "Uzuza amakuru yose."
                     }
 
-                    password != confirmPassword -> {
+                    newPassword != confirmPassword -> {
 
-                        message =
-                            "Passwords ntizisa."
+                        message = "Passwords ntizisa."
                     }
 
-                    password.length < 8 -> {
+                    newPassword.length < 8 -> {
 
                         message =
                             "Password ikwiye kuba ifise nibura inyuguti 8."
@@ -154,24 +140,32 @@ fun RegisterScreen(
 
                     else -> {
 
-                        AuthRepository.register(
-                            context = context,
-                            user = UserAccount(
-                                id = UUID.randomUUID().toString(),
-                                name = name.trim(),
+                        val changed =
+                            AuthRepository.resetPassword(
+                                context = context,
                                 phoneNumber = phoneNumber.trim(),
                                 dateOfBirth = dateOfBirth.trim(),
-                                password = password
+                                newPassword = newPassword
                             )
-                        )
 
-                        onRegisterSuccess()
+                        if (changed) {
+
+                            message =
+                                "Password yahinduwe neza ✅"
+
+                            onPasswordChanged()
+
+                        } else {
+
+                            message =
+                                "Phone Number canke Date of Birth si vyo ❌"
+                        }
                     }
                 }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("Register")
+            Text("Change Password")
         }
 
         Spacer(
@@ -179,10 +173,10 @@ fun RegisterScreen(
         )
 
         TextButton(
-            onClick = onLogin,
+            onClick = onBackToLogin,
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("I have an account? Login")
+            Text("Back to Login")
         }
 
         if (message.isNotEmpty()) {
@@ -191,10 +185,8 @@ fun RegisterScreen(
                 modifier = Modifier.height(10.dp)
             )
 
-            Text(
-                text = message
-            )
+            Text(message)
         }
     }
 }
-
+0
