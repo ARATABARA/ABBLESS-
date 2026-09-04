@@ -1,3 +1,5 @@
+@file:OptIn(ExperimentalMaterial3Api::class)
+
 package com.abbless.app.home
 
 import androidx.compose.foundation.layout.*
@@ -35,8 +37,7 @@ fun HomeScreen(
                 title = {
                     Text(
                         text = "ABBLESS",
-                        style =
-                            MaterialTheme.typography.titleLarge
+                        style = MaterialTheme.typography.titleLarge
                     )
                 },
 
