@@ -1,60 +1,6 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+        mutableStateOf(false) TopAppBar(
 
-package com.abbless.app.home
-
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-
-@Composable
-fun HomeScreen(
-    onProfile: () -> Unit = {},
-    onSwitchAccount: () -> Unit = {},
-    onFriends: () -> Unit = {},
-    onGroups: () -> Unit = {},
-    onSaved: () -> Unit = {},
-    onFavorites: () -> Unit = {},
-    onLanguages: () -> Unit = {},
-    onSettings: () -> Unit = {},
-    onHelp: () -> Unit = {},
-    onAbout: () -> Unit = {},
-    onAdminLogin: () -> Unit = {},
-    onLogout: () -> Unit = {},
-    onLessons: () -> Unit = {},
-    onMessages: () -> Unit = {},
-    onNotifications: () -> Unit = {},
-    onAI: () -> Unit = {}
-) {
-
-    var selectedTab by remember {
-        mutableStateOf(0)
-    }
-
-    var menuExpanded by remember {
-        mutableStateOf(false)
-    }
-
-    Scaffold(
-
-        topBar = {
-
-            TopAppBar(
-
-                title = {
-                    Text(
-                        text = "ABBLESS",
-                        style = MaterialTheme.typography.titleLarge
-                    )
-                },
-
-                navigationIcon = {
-
-                    Box {
-
-                        IconButton(
+                title = { Text(
                             onClick = {
                                 menuExpanded = true
                             }
@@ -75,7 +21,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onProfile()
                                 }
                             )
 
@@ -95,7 +40,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onFriends()
                                 }
                             )
 
@@ -105,7 +49,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onGroups()
                                 }
                             )
 
@@ -115,7 +58,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onSaved()
                                 }
                             )
 
@@ -125,7 +67,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onFavorites()
                                 }
                             )
 
@@ -135,7 +76,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onLanguages()
                                 }
                             )
 
@@ -145,7 +85,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onSettings()
                                 }
                             )
 
@@ -155,7 +94,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onHelp()
                                 }
                             )
 
@@ -165,7 +103,6 @@ fun HomeScreen(
                                 },
                                 onClick = {
                                     menuExpanded = false
-                                    onAbout()
                                 }
                             )
 

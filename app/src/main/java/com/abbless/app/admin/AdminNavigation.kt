@@ -1,6 +1,5 @@
 package com.abbless.app.admin
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -11,22 +10,79 @@ import com.abbless.app.admin.auth.ChangePasswordScreen
 import com.abbless.app.admin.lessons.LessonsManagerScreen
 import com.abbless.app.admin.payments.ActivationCodeManagerScreen
 import com.abbless.app.admin.payments.PaymentAdminScreen
+import com.abbless.app.admin.payments.PaymentMethodsScreen
 import com.abbless.app.admin.payments.SubscriptionManagerScreen
 import com.abbless.app.admin.statistics.StatisticsScreen
 import com.abbless.app.admin.users.AdminUserScreen
 import com.abbless.app.admin.screens.AdminDashboardScreen
+import com.abbless.app.admin.social.SocialManagerScreen
 
 @Composable
 fun AdminNavigation(
     navController: NavHostController
 ) {
+
     NavHost(
         navController = navController,
         startDestination = "admin_dashboard"
     ) {
 
+        // =========================
+        // ADMIN DASHBOARD
+        // =========================
+
         composable("admin_dashboard") {
+
             AdminDashboardScreen(
+
+                onSecurityClick = {
+                    navController.navigate("security")
+                },
+
+                onLessonsClick = {
+                    navController.navigate("lessons")
+                },
+
+                onUsersClick = {
+                    navController.navigate("users")
+                },
+
+                onSocialClick = {
+                    navController.navigate("social")
+                },
+
+                onAIClick = {
+                    navController.navigate("ai")
+                },
+
+                onAnnouncementsClick = {
+                    navController.navigate("announcements")
+                },
+
+                onPaymentsClick = {
+                    navController.navigate("payments")
+                },
+
+                onActivationCodesClick = {
+                    navController.navigate("activation_codes")
+                },
+
+                onStatisticsClick = {
+                    navController.navigate("statistics")
+                },
+
+                onLanguagesClick = {
+                    navController.navigate("languages")
+                },
+
+                onBackupClick = {
+                    navController.navigate("backup")
+                },
+
+                onSettingsClick = {
+                    navController.navigate("settings")
+                },
+
                 onLogoutClick = {
                     navController.navigate("admin_login") {
                         popUpTo("admin_dashboard") {
@@ -34,46 +90,19 @@ fun AdminNavigation(
                         }
                     }
                 }
+
+                // Payment Methods button will be connected
+                // from AdminDashboardScreen.
             )
         }
+
+
+        // =========================
+        // SECURITY
+        // =========================
 
         composable("security") {
-            Text("🔐 Security Manager")
-        }
 
-        composable("lessons") {
-            LessonsManagerScreen(
-                onBack = {
-                    navController.popBackStack()
-                }
-            )
-        }
-
-        composable("users") {
-            AdminUserScreen()
-        }
-
-        composable("announcements") {
-            AnnouncementScreen()
-        }
-
-        composable("payments") {
-            PaymentAdminScreen()
-        }
-
-        composable("activation_codes") {
-            ActivationCodeManagerScreen()
-        }
-
-        composable("subscriptions") {
-            SubscriptionManagerScreen()
-        }
-
-        composable("statistics") {
-            StatisticsScreen()
-        }
-
-        composable("settings") {
             ChangePasswordScreen(
                 onPasswordChanged = {
                     navController.popBackStack()
@@ -81,20 +110,183 @@ fun AdminNavigation(
             )
         }
 
-        composable("backup") {
-            Text("💾 Backup & Database")
+
+        // =========================
+        // LESSONS
+        // =========================
+
+        composable("lessons") {
+
+            LessonsManagerScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
-        composable("ai") {
-            Text("🤖 AI Manager — coming soon")
+
+        // =========================
+        // USERS
+        // =========================
+
+        composable("users") {
+
+            AdminUserScreen()
         }
+
+
+        // =========================
+        // SOCIAL MANAGER
+        // =========================
 
         composable("social") {
-            Text("💬 Social Manager — coming soon")
+
+            SocialManagerScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
 
+
+        // =========================
+        // AI MANAGER
+        // =========================
+
+        composable("ai") {
+
+            androidx.compose.material3.Text(
+                text = """
+                    🤖 ABBLESS AI Manager
+
+                    AI management.
+
+                    • AI settings
+                    • AI responses
+                    • AI languages
+                    • AI usage
+                    • AI controls
+                """.trimIndent()
+            )
+        }
+
+
+        // =========================
+        // ANNOUNCEMENTS
+        // =========================
+
+        composable("announcements") {
+
+            AnnouncementScreen()
+        }
+
+
+        // =========================
+        // PAYMENT MANAGER
+        // =========================
+
+        composable("payments") {
+
+            PaymentAdminScreen()
+        }
+
+
+        // =========================
+        // PAYMENT METHODS
+        // =========================
+
+        composable("payment_methods") {
+
+            PaymentMethodsScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+
+        // =========================
+        // ACTIVATION CODES
+        // =========================
+
+        composable("activation_codes") {
+
+            ActivationCodeManagerScreen()
+        }
+
+
+        // =========================
+        // SUBSCRIPTIONS
+        // =========================
+
+        composable("subscriptions") {
+
+            SubscriptionManagerScreen()
+        }
+
+
+        // =========================
+        // STATISTICS
+        // =========================
+
+        composable("statistics") {
+
+            StatisticsScreen()
+        }
+
+
+        // =========================
+        // LANGUAGES
+        // =========================
+
         composable("languages") {
-            Text("🌍 Language Manager — coming soon")
+
+            androidx.compose.material3.Text(
+                text = """
+                    🌍 Language Manager
+
+                    Kirundi
+                    Français
+                    English
+                    Kiswahili
+                    Español
+                    العربية
+                """.trimIndent()
+            )
+        }
+
+
+        // =========================
+        // BACKUP & DATABASE
+        // =========================
+
+        composable("backup") {
+
+            androidx.compose.material3.Text(
+                text = """
+                    💾 Backup & Database
+
+                    Database management.
+
+                    • Backup
+                    • Restore
+                    • Database information
+                """.trimIndent()
+            )
+        }
+
+
+        // =========================
+        // SETTINGS
+        // =========================
+
+        composable("settings") {
+
+            ChangePasswordScreen(
+                onPasswordChanged = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }

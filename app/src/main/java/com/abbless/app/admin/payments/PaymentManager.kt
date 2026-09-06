@@ -14,10 +14,32 @@ object PaymentManager {
                     it.code == code &&
                     !it.used
                 }
+                ?: return false
 
-        if (activationCode == null) {
-            return false
-        }
+        val plan =
+            PaymentRepository
+                .getPlans()
+                .find {
+                    it.id == activationCode.planId
+                }
+                ?: return false
+
+        val now = System.currentTimeMillis()
+
+        val subscription =
+            Subscription(
+                userId = userId,
+                planId = plan.id,
+                startDate = now,
+                expiryDate =
+                    now +
+                    plan.durationDays * 24L * 60L * 60L * 1000L,
+                active = true
+            )
+
+        PaymentRepository.addSubscription(
+            subscription
+        )
 
         return true
     }
